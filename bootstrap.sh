@@ -40,6 +40,8 @@ server {
     root  /var/www/html/public;
     index index.php;
 
+    sendfile off;
+
     location / {
     try_files $uri $uri/ /index.php?$args;
     }
