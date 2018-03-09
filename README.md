@@ -21,7 +21,7 @@ Note that this configuration does not include Node.JS, Redis, Memcache etc. Thes
 
 Use `vagrant box add ubuntu/xenial64` to download and install vagrant image.
 
-Edit `bootstrap.sh` to 
+Edit `bootstrap.sh` to include your desired database name and password. Database user will be `root`.
 
 Put `Vagrantfile` and `bootstrap.sh` inside a folder and do a `vagrant up` on the command line.
 
@@ -31,4 +31,4 @@ Run `composer global require "laravel/installer"` to setup the installer.
 
 Finally, `laravel new` creates a blank application.
 
-You're new vagrant box will be running at IP `192.168.33.22`. You may want to add this to your hosts file.
+Your new vagrant box will be running at IP `192.168.33.22`. You may want to add this to your hosts file.
