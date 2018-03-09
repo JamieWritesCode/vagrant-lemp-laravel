@@ -13,9 +13,9 @@ A simple Vagrantfile and bootstrap script that installs a Vagrant box suitable f
 
 ### Why use this instead of Laravel Homestead?
 
-Laravel Homestead provides a comprehensive solution to running Laravel with Vagrant on your local machine however, I found its configuration slightly overkill and instead opted for a simple, single site per box install rather than supporting multiple projects within the same Vagrant instance.
+Laravel Homestead provides a comprehensive solution to running Laravel with Vagrant on your local machine however, I found its configuration slightly overkill. Instead, I've opted for a simple, single site install rather than supporting multiple projects within the same Vagrant instance.
 
-Note that this configuration does not include Node.JS, Vagrant
+Note that this configuration does not include Node.JS, Redis, Memcache etc. These will need to be installed manually when required.
 
 ### How to use?
 
