@@ -1,12 +1,5 @@
 #!/usr/bin/env bash
 
-########### START EDITING HERE ###########
-
-PASSWORD='password'
-DATABASE='database'
-
-########### STOP EDITING HERE ###########
-
 # create public folder
 sudo mkdir "/var/www/html/public"
 
@@ -21,11 +14,11 @@ sudo apt-get -y upgrade
 sudo apt-get install -y nginx php7.2 php7.2-fpm php7.2-zip php7.2-xml php7.2-mbstring
 
 # install mysql and give password to installer
-sudo debconf-set-selections <<< 'mysql-server-5.7 mysql-server/root_password password $PASSWORD'
-sudo debconf-set-selections <<< 'mysql-server-5.7 mysql-server/root_password_again password $PASSWORD'
+sudo debconf-set-selections <<< 'mysql-server-5.7 mysql-server/root_password password password'
+sudo debconf-set-selections <<< 'mysql-server-5.7 mysql-server/root_password_again password password'
 sudo apt-get -y install mysql-server-5.7
 sudo apt-get install php7.2-mysql
-sudo mysql -uroot -p${PASSWORD} -e"CREATE DATABASE ${DATABASE};"
+sudo mysql -uroot -ppassword -e"CREATE DATABASE database;"
 
 sudo rm /etc/nginx/sites-available/default
 sudo touch /etc/nginx/sites-available/default
