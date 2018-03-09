@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
-# Use single quotes instead of double quotes to make it work with special-character passwords
+########### START EDITING HERE ###########
+
 PASSWORD='password'
-DATABASE='data'
+DATABASE='database'
+
+########### STOP EDITING HERE ###########
 
 # create public folder
 sudo mkdir "/var/www/html/public"
@@ -10,23 +13,18 @@ sudo mkdir "/var/www/html/public"
 # add repo for php7
 sudo add-apt-repository ppa:ondrej/php
 
-#add repo for MariaDB
-sudo apt-get install software-properties-common
-sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
-sudo add-apt-repository 'deb [arch=amd64,i386] http://mariadb.mirror.digitalpacific.com.au/repo/10.1/ubuntu trusty main'
-
 # update / upgrade
 sudo apt-get update
 sudo apt-get -y upgrade
 
 # install nginx and php
-sudo apt-get install -y nginx php7.1 php7.1-fpm php-zip php-xml php-mbstring
+sudo apt-get install -y nginx php7.2 php7.2-fpm php7.2-zip php7.2-xml php7.2-mbstring
 
 # install mysql and give password to installer
-sudo debconf-set-selections <<< "maria-db-10.1 mysql-server/root_password password $PASSWORD"
-sudo debconf-set-selections <<< "maria-db-10.1 mysql-server/root_password_again password $PASSWORD"
-sudo apt-get -y install mariadb-server
-sudo apt-get install php7.1-mysql
+sudo debconf-set-selections <<< 'mysql-server-5.7 mysql-server/root_password password $PASSWORD'
+sudo debconf-set-selections <<< 'mysql-server-5.7 mysql-server/root_password_again password $PASSWORD'
+sudo apt-get -y install mysql-server-5.7
+sudo apt-get install php7.2-mysql
 sudo mysql -uroot -p${PASSWORD} -e"CREATE DATABASE ${DATABASE};"
 
 sudo rm /etc/nginx/sites-available/default
@@ -41,7 +39,7 @@ server {
     index index.php;
 
     sendfile off;
-    max_client_body_size 8M;
+    client_max_body_size 8M;
 
     location / {
     try_files $uri $uri/ /index.php?$args;
@@ -49,15 +47,15 @@ server {
 
     location ~ \.php$ {
     try_files $uri =404;
-    include fastcgi_params;
-    fastcgi_pass unix:/run/php/php7.1-fpm.sock;
+    include fastcgi.conf;
+    fastcgi_pass unix:/run/php/php7.2-fpm.sock;
     }
 }
 EOF
 
 # restart nginx
 service nginx restart
-sudo service php7.1-fpm restart
+sudo service php7.2-fpm restart
 
 # install git
 sudo apt-get -y install git
